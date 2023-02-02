@@ -1,1 +1,0 @@
-😊 Hi there! Welcome to StomWise
