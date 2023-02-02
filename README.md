@@ -1,1 +1,0 @@
-😊Hi there! welcome to StromWise!
