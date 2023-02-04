@@ -6,6 +6,8 @@ import TimeLoc from "./components/TimeLoc";
 import TopButtons from "./components/TopButtons";
 import getFormattedWeatherData from "./weather/weather";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // import getWeather from './weather/weather';
 // import UilReact from '@iconscout/react-unicons/icons/uil-react'
@@ -17,7 +19,16 @@ function App() {
 
   useEffect(() => {
     const fetchWeather = async () => {
+      const message = query.q ? query.q : "current location.";
+
+      toast.info("Fetching weather for " + message);
+
       await getFormattedWeatherData({ ...query, units }).then((data) => {
+        
+        toast.success(
+          `Successfully fetched weather for ${data.name}, ${data.country}`
+        );
+
         setWeather(data);
       });
 
@@ -28,17 +39,21 @@ function App() {
   }, [query, units]);
 
   const formatBackground = () => {
-      if (!weather) return 'from-pink-500 via-purple-500 to-indigo-500'
-      
-      const limit = units == 'metric' ? 20 : 60
-      
-      if(weather.temp <= limit) return 'bg-gradient-to-t from-sky-400 to-blue-500'
+    if (!weather)
+      return "bg-gradient-to-b from-pink-500 via-purple-500 to-indigo-500";
 
-      return 'bg-gradient-to-b from-pink-500 via-red-500 to-yellow-500'
-  }
+    const limit = units === "metric" ? 20 : 60;
+
+    if (weather.temp <= limit)
+      return "bg-gradient-to-b from-sky-400 to-indigo-900";
+
+    return "bg-gradient-to-t from-orange-400 to-rose-400";
+  };
 
   return (
-    <div className={`mx-auto max-w-screen-md mt-1 mb-1 py-5 px-32 h-fit shadow-xl ${formatBackground()}`} >
+    <div
+      className={`mx-auto max-w-screen-md mt-1 mb-1 py-5 px-32 h-fit shadow-xl ${formatBackground()}`}
+    >
       <TopButtons setQuery={setQuery} />
       <Inputs setQuery={setQuery} units={units} setUnits={setUnits} />
 
@@ -50,6 +65,19 @@ function App() {
           {/* <Forecast title="daily forecast"/> */}
         </div>
       )}
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { UilSearch, UilMapMarker } from "@iconscout/react-unicons";
+import { toast } from "react-toastify";
 
 function Inputs({ setQuery, units, setUnits }) {
   const [city, setCity] = useState("");
@@ -10,7 +11,11 @@ function Inputs({ setQuery, units, setUnits }) {
 
   const handleLocation = () => {
     if (navigator.geolocation) {
+      toast.info("Fetching users location")
       navigator.geolocation.getCurrentPosition((position) => {
+        
+        toast.success("Location fetched successfully")
+        
         let lat = position.coords.latitude;
         let lon = position.coords.longitude;
 
