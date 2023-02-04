@@ -1,10 +1,8 @@
 import React from "react";
 
-function Forecast({title}) {
+function Forecast({ title, items }) {
   return (
     <div>
-
-
       <div className="flex items-center justify-start my-6">
         <p className="text-white font-medium uppercase">{title}</p>
       </div>
@@ -12,9 +10,26 @@ function Forecast({title}) {
       <hr className="my-2" />
 
       <div className="flex flex-row items-center justify-between text-white">
+        {items.map((item) => (
+          <div className="flex flex-col items-center justify-center">
+            <p className="font-light text-sm">{item.title}</p>
+            <img
+              src="http://openweathermap.org/img/wn/01d@2x.png"
+              alt="h-pic"
+              className="w-12 my-1"
+            />
+            <p className="font-medium">22°</p>
+            {/* <p className="font-light">Clear</p> */}
+          </div>
+        ))}
 
 
-        <div className="flex flex-col items-center justify-center">
+
+
+
+
+
+        {/* <div className="flex flex-col items-center justify-center">
           <p className="font-light text-sm">04:30 PM</p>
           <img
             src="http://openweathermap.org/img/wn/01d@2x.png"
@@ -52,23 +67,8 @@ function Forecast({title}) {
             className="w-12 my-1"
           />
           <p className="font-medium">22°</p>
-        </div>
-
-        <div className="flex flex-col items-center justify-center">
-          <p className="font-light text-sm">04:30 PM</p>
-          <img
-            src="http://openweathermap.org/img/wn/01d@2x.png"
-            alt="h-pic"
-            className="w-12 my-1"
-          />
-          <p className="font-medium">22°</p>
-        </div>
-
-
-
+        </div> */}
       </div>
-
-
     </div>
   );
 }
