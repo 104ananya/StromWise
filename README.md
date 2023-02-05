@@ -68,5 +68,5 @@ You will need your API Key to run this application locally.
 
 ## Acknowledgements  
 
-[theyashpatel](https://github.com/)
+[yashpatel](https://github.com/)
 
