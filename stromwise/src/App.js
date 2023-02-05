@@ -8,7 +8,7 @@ import getFormattedWeatherData from "./weather/weather";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import './App.css';
+import "./App.css";
 
 // import getWeather from './weather/weather';
 // import UilReact from '@iconscout/react-unicons/icons/uil-react'
@@ -25,9 +25,19 @@ function App() {
       toast.info("Fetching weather for " + message);
 
       await getFormattedWeatherData({ ...query, units }).then((data) => {
+        
         toast.success(
           `Successfully fetched weather for ${data.name}, ${data.country}`
         );
+
+
+        // if (data.cod === '404') {
+        //   toast.error(`Error in fetching data`);
+        // }
+
+        // console.log(data);
+        console.log(data.cod);
+
 
         setWeather(data);
       });
@@ -37,10 +47,6 @@ function App() {
 
     fetchWeather();
   }, [query, units]);
-
-  // if(weather.cod === 404){
-  //   toast.error(`Error in fetching data`);
-  // }
 
   const formatBackground = () => {
     if (!weather)
@@ -58,38 +64,35 @@ function App() {
 
   return (
     <div className="main-container">
-
-    
-    <div
-      className={`mx-auto max-w-screen-md  py-5 px-32  h-fit shadow-xl  
+      <div
+        className={`mx-auto max-w-screen-md  py-5 px-32  h-fit shadow-xl  
       ${formatBackground()}`}
-    >
-      <TopButtons setQuery={setQuery} />
-      <Inputs setQuery={setQuery} units={units} setUnits={setUnits} />
+      >
+        <TopButtons setQuery={setQuery} />
+        <Inputs setQuery={setQuery} units={units} setUnits={setUnits} />
 
-      {weather && (
-        <div>
-          <TimeLoc weather={weather} />
-          <Details weather={weather} />
-          <Forecast title="hourly forecast" items={weather.list} />
-          {/* <Forecast title="daily forecast"/> */}
-        </div>
-      )}
+        {weather && (
+          <div>
+            <TimeLoc weather={weather} />
+            <Details weather={weather} />
+            <Forecast title="hourly forecast" items={weather.list} />
+            {/* <Forecast title="daily forecast"/> */}
+          </div>
+        )}
 
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-    </div>
-
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
+      </div>
     </div>
   );
 }
